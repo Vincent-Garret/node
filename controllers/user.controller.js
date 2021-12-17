@@ -9,7 +9,6 @@ const bcrypt = require('bcrypt');
 
 exports.list_user = (req, res, next) => {
     User.findAll({
-        attributes: ['id', 'name'],
         include: [
             {
                 model: Property,
@@ -64,15 +63,18 @@ exports.user_login = (req, res, next) => {
         }
     })
     .then(user => {
+        //test de récup du user
         if(user){
             bcrypt.compare(req.body.password, user.password, (err, result) => {
                 if(err){
                     res.status(500).end
                 }
+                //renoie si ok
                 else if(result){
                     const token = jwt.sign({name: user.name, role: user.role}, process.env.SECRET, {expiresIn:'1h'})
                     res.status(200).json(({token: token}))
                 }
+                //sinon dis au revoir
                 else{
                     res.status(404).json({message: 'Bad Login/Password'})
                 }
