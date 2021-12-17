@@ -1,7 +1,6 @@
 let User = require('../models').User
 let Property = require('../models').Property
 const jwt = require('jsonwebtoken')
-const roleService = require('../services/role.service');
 const passwordService = require('../services/password.service');
 const bcrypt = require('bcrypt');
 

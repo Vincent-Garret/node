@@ -14,6 +14,11 @@ exports.list_property = (req, res, next) => {
 }
 
 exports.add_property = (req, res, next) => {
+    let property = req.body;
+    console.log(req)
+    if(req.file){
+        property.picture = `public/upload/property/${req.file.filename}`
+    }
     Property.create(req.body)
     .then(data => {
         res.status(201).json(data);
